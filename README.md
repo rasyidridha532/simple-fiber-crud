@@ -6,8 +6,13 @@ This is my simple backend CRUD with Golang with Clean Architecture. I create thi
 - Web Framework: Fiber
 - Database: MongoDB
 - Validation: Go-Playground
+
+## On Going Feature
 - Logging: Zap (In Progress)
-- Dependency Injection Automation (soon)
+- Dependency Injection (currently manual)
+- Unit Testing
+- Username & Password Auth
+- JWT Auth
 
 ## Configuration
 | ENV         | Description                               |
