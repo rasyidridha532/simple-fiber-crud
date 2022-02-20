@@ -7,7 +7,7 @@ This is my simple backend CRUD with Golang with Clean Architecture. I create thi
 - Database: MongoDB
 - Validation: Go-Playground
 - Logging: Zap (In Progress)
-- Dependency Injection (soon)
+- Dependency Injection Automation (soon)
 
 ## Configuration
 | ENV         | Description                               |
