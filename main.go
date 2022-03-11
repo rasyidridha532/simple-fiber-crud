@@ -26,7 +26,7 @@ func init() {
 
 func main() {
 	// setup database
-	database, err := app.Connect()
+	database, err := config.Connect()
 
 	// setup validator
 	validate := validator.New()
@@ -53,7 +53,7 @@ func main() {
 	f.Use(cors.New())
 	f.Use(recoverFiber.New())
 
-	app.NewRouter(accountController)
+	app.NewRouter(accountController, f)
 
 	port := os.Getenv("PORT")
 

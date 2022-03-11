@@ -1,4 +1,4 @@
-package app
+package config
 
 import (
 	"context"
@@ -11,6 +11,8 @@ import (
 )
 
 func Connect() (*mongo.Database, error) {
+	ctx, _ := NewMongoContext()
+
 	dbName := os.Getenv("DB_NAME")
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASSWORD")
@@ -36,17 +38,8 @@ func Connect() (*mongo.Database, error) {
 	client, errors := mongo.NewClient(clientOptions)
 	exception.LogError(errors)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
 	errors = client.Connect(ctx)
 	exception.LogError(errors)
-
-	defer func() {
-		if errors = client.Disconnect(ctx); errors != nil {
-			exception.LogError(errors)
-		}
-	}()
 
 	return client.Database(dbName), errors
 }

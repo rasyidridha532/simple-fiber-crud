@@ -3,7 +3,7 @@ package repository
 import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"simple-fiber-crud/app"
+	"simple-fiber-crud/config"
 	"simple-fiber-crud/entity"
 	"simple-fiber-crud/exception"
 )
@@ -19,7 +19,7 @@ type accountRepositoryImpl struct {
 }
 
 func (a *accountRepositoryImpl) GetAllUsers() (account []entity.Account) {
-	ctx, cancel := app.NewMongoContext()
+	ctx, cancel := config.NewMongoContext()
 	defer cancel()
 
 	cursor, err := a.Collection.Find(ctx, bson.M{})
@@ -42,7 +42,7 @@ func (a *accountRepositoryImpl) GetAllUsers() (account []entity.Account) {
 }
 
 func (a *accountRepositoryImpl) GetUser() (account entity.Account) {
-	ctx, cancel := app.NewMongoContext()
+	ctx, cancel := config.NewMongoContext()
 	defer cancel()
 
 	cursor := a.Collection.FindOne(ctx, bson.M{"_id": account.Id})
@@ -53,7 +53,7 @@ func (a *accountRepositoryImpl) GetUser() (account entity.Account) {
 }
 
 func (a *accountRepositoryImpl) Insert(account entity.Account) {
-	ctx, cancel := app.NewMongoContext()
+	ctx, cancel := config.NewMongoContext()
 	defer cancel()
 
 	_, err := a.Collection.InsertOne(ctx, bson.M{
@@ -66,7 +66,7 @@ func (a *accountRepositoryImpl) Insert(account entity.Account) {
 }
 
 func (a *accountRepositoryImpl) DeleteUser(account entity.Account) {
-	ctx, cancel := app.NewMongoContext()
+	ctx, cancel := config.NewMongoContext()
 	defer cancel()
 
 	_, err := a.Collection.DeleteOne(ctx, bson.M{"_id": account.Id})

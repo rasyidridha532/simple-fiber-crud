@@ -2,7 +2,7 @@
 
 FROM golang:1.17-alpine AS build
 
-RUN apk update && apk add --no-cache git
+RUN apk update && apk add --no-cache git && apk add tzdata
 
 # Create appuser.
 ENV USER=appuser
@@ -31,6 +31,9 @@ FROM scratch
 # Import the user and group files from the builder.
 COPY --from=build /etc/passwd /etc/passwd
 COPY --from=build /etc/group /etc/group
+
+# Import timezone data
+COPY --from=build /usr/share/zoneinfo /usr/share/zoneinfo
 
 COPY --from=build /fiber-crud /fiber-crud
 

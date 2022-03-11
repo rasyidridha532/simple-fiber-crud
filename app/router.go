@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func NewRouter(controller controller.AccountController) (app *fiber.App) {
+func NewRouter(controller controller.AccountController, app *fiber.App) {
 	app.Get("/dashboard", monitor.New())
 
 	api := app.Group("/api")
@@ -25,6 +25,4 @@ func NewRouter(controller controller.AccountController) (app *fiber.App) {
 	v1.Get("/account", controller.GetUser)
 	v1.Post("/account", controller.Create)
 	v1.Delete("/account", controller.DeleteUser)
-
-	return app
 }

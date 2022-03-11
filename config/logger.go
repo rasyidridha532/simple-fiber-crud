@@ -10,12 +10,18 @@ func Logger() *zap.Logger {
 
 	if goEnv == "production" {
 		logger, _ := zap.NewProduction()
-		defer logger.Sync()
+		defer func() {
+			err := logger.Sync()
+			logger.Error(err.Error())
+		}()
 
 		return logger
 	} else {
 		logger, _ := zap.NewDevelopment()
-		defer logger.Sync()
+		defer func() {
+			err := logger.Sync()
+			logger.Error(err.Error())
+		}()
 
 		return logger
 	}
