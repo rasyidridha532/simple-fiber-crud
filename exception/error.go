@@ -2,13 +2,12 @@ package exception
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"simple-fiber-crud/config"
+	"go.uber.org/zap"
 )
 
 func LogError(err error) {
 	if err != nil {
-		logger := config.Logger()
-		logger.Error(err.Error())
+		zap.Error(err)
 		return
 	}
 }

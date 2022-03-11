@@ -8,6 +8,8 @@ import (
 	"simple-fiber-crud/exception"
 )
 
+var logging = config.Logger()
+
 func NewAccountRepository(database *mongo.Database) AccountRepository {
 	return &accountRepositoryImpl{
 		Collection: database.Collection("account"),
@@ -63,6 +65,12 @@ func (a *accountRepositoryImpl) Insert(account entity.Account) {
 		"account_type": account.AccountType,
 	})
 	exception.LogError(err)
+
+	logging.Info("Insert Success!")
+	defer func() {
+		err = logging.Sync()
+		exception.LogError(err)
+	}()
 }
 
 func (a *accountRepositoryImpl) DeleteUser(account entity.Account) {
@@ -71,4 +79,10 @@ func (a *accountRepositoryImpl) DeleteUser(account entity.Account) {
 
 	_, err := a.Collection.DeleteOne(ctx, bson.M{"_id": account.Id})
 	exception.LogError(err)
+
+	logging.Info("User has been deleted!")
+	defer func() {
+		err = logging.Sync()
+		exception.LogError(err)
+	}()
 }

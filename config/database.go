@@ -34,7 +34,8 @@ func Connect() (*mongo.Database, error) {
 	clientOptions := options.Client().
 		ApplyURI(clientURI).
 		SetMinPoolSize(10).
-		SetMaxPoolSize(30).SetMaxConnIdleTime(time.Duration(5) * time.Second)
+		SetMaxPoolSize(30).
+		SetMaxConnIdleTime(time.Duration(5) * time.Second)
 	client, errors := mongo.NewClient(clientOptions)
 	exception.LogError(errors)
 
